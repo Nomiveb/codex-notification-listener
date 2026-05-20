@@ -6,22 +6,16 @@ Small Windows app that listens for Codex Desktop toast notifications and plays:
 Sounds\codex.wav
 ```
 
-Put your custom WAV file inside this repo at:
+Put your custom WAV file inside the repo at:
 
 ```text
-E:\Coding\PROJECTS\codex-listneer\Sounds\codex.wav
+Sounds\codex.wav
 ```
 
 It writes a plain log here:
 
 ```text
 C:\AHK\codex_notification_listener.log
-```
-
-The built executable is here:
-
-```text
-E:\Coding\PROJECTS\codex-listneer\CodexNotificationListener\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\CodexNotificationListener.exe
 ```
 
 For normal use, launch it from Start as `Codex Notification Listener`, because Windows registers it as a packaged app.
@@ -84,7 +78,7 @@ You can also use Visual Studio:
 Open this solution in Visual Studio:
 
 ```text
-E:\Coding\PROJECTS\codex-listneer\CodexNotificationListener.sln
+CodexNotificationListener.sln
 ```
 
 Then choose:
@@ -108,7 +102,7 @@ dotnet publish .\CodexNotificationListener\CodexNotificationListener.csproj -c R
 This creates a test MSIX package folder here:
 
 ```text
-E:\Coding\PROJECTS\codex-listneer\CodexNotificationListener\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\AppPackages\CodexNotificationListener_1.0.0.0_x64_Test
+CodexNotificationListener\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\AppPackages\CodexNotificationListener_1.0.0.0_x64_Test
 ```
 
 To share with another person, zip that whole folder and send it.
@@ -165,7 +159,7 @@ A true background wake-up task is possible later, but it is intentionally out of
 App icons live in:
 
 ```text
-E:\Coding\PROJECTS\codex-listneer\CodexNotificationListener\Assets
+CodexNotificationListener\Assets
 ```
 
 The taskbar icon is set from:
