@@ -6,7 +6,7 @@ Small Windows app that listens for Codex Desktop toast notifications and plays:
 Sounds\codex.wav
 ```
 
-Put your custom WAV file inside the repo at:
+Put your custom WAV file at:
 
 ```text
 Sounds\codex.wav
@@ -20,11 +20,11 @@ C:\AHK\codex_notification_listener.log
 
 For normal use, launch it from Start as `Codex Notification Listener`, because Windows registers it as a packaged app.
 
-## Download
+## Install The App
 
-For normal users, do not download the source code zip from GitHub.
+For normal users, do not download **Source code (zip)** or **Source code (tar.gz)**.
 
-Use the packaged app from **GitHub Releases** instead:
+Download the packaged app from **GitHub Releases** instead:
 
 1. Open the latest release.
 2. Download `CodexNotificationListener_1.0.0.0_x64_Test.zip`.
@@ -32,7 +32,35 @@ Use the packaged app from **GitHub Releases** instead:
 4. Run `Add-AppDevPackage.ps1`.
 5. Start `Codex Notification Listener` from the Start menu.
 
-This is currently an unsigned test package, so Windows may require Developer Mode. A fully polished installer would need a trusted code-signing certificate.
+The source code zip is only for developers who want to inspect or change the code.
+
+This is currently an unsigned MSIX test package, so Windows may require Developer Mode. A fully polished installer would need a trusted code-signing certificate.
+
+## Change The Sound
+
+In the extracted package folder, replace this file with your own WAV file:
+
+```text
+Sounds\codex.wav
+```
+
+The file must stay named `codex.wav`.
+
+## Where Windows Installs It
+
+`Add-AppDevPackage.ps1` does not download the app from the internet.
+
+It installs the app from the package files that are already inside the extracted release zip. After installation, Windows registers the app and stores it in its protected app package location, usually under:
+
+```text
+C:\Program Files\WindowsApps
+```
+
+You normally do not open the app from that folder. Start it from the Windows Start menu as:
+
+```text
+Codex Notification Listener
+```
 
 ## What It Does
 
@@ -55,15 +83,21 @@ Package: OpenAI.Codex
 AUMID: OpenAI.Codex_2p2nqsd0c76g0!App
 ```
 
-## Requirements
+## Requirements For Users
 
 - Windows 11.
-- Visual Studio 2022 with Windows App SDK / WinUI development tools is the easiest route.
 - `Sounds\codex.wav` must exist.
+- Developer Mode may be required because this is currently an unsigned test package.
+
+## Requirements For Developers
+
+- Windows 11.
+- .NET SDK.
+- Visual Studio 2022 with Windows App SDK / WinUI development tools is the easiest route if you want to build or modify the app.
 
 The project is manually scaffolded because this machine did not have the WinUI `dotnet new` template installed.
 
-## Build
+## Build From Source
 
 From PowerShell:
 
@@ -109,7 +143,7 @@ To share with another person, zip that whole folder and send it.
 
 For GitHub, attach that zip to a GitHub Release. Do not commit generated package zips into the repository.
 
-They should run:
+Users should run:
 
 ```text
 Add-AppDevPackage.ps1
