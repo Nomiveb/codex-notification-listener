@@ -20,25 +20,25 @@ C:\AHK\codex_notification_listener.log
 
 For normal use, launch it from Start as `Codex Notification Listener`, because Windows registers it as a packaged app.
 
-## Install The App
+## Download The App
 
 For normal users, do not download **Source code (zip)** or **Source code (tar.gz)**.
 
-Download the packaged app from **GitHub Releases** instead:
+Download the portable app from **GitHub Releases** instead:
 
 1. Open the latest release.
-2. Download `CodexNotificationListener_1.0.0.0_x64_Test.zip`.
+2. Download `CodexNotificationListener-v1.0.0-windows-x64-portable.zip`.
 3. Extract the zip.
-4. Run `Add-AppDevPackage.ps1`.
-5. Start `Codex Notification Listener` from the Start menu.
+4. Open the extracted folder.
+5. Run `CodexNotificationListener.exe`.
+
+You can move the extracted folder anywhere, for example Desktop, Downloads, or `C:\Tools\CodexNotificationListener`.
 
 The source code zip is only for developers who want to inspect or change the code.
 
-This is currently an unsigned MSIX test package, so Windows may require Developer Mode. A fully polished installer would need a trusted code-signing certificate.
-
 ## Change The Sound
 
-In the extracted package folder, replace this file with your own WAV file:
+In the extracted app folder, replace this file with your own WAV file:
 
 ```text
 Sounds\codex.wav
@@ -46,21 +46,15 @@ Sounds\codex.wav
 
 The file must stay named `codex.wav`.
 
-## Where Windows Installs It
+## Desktop Shortcut
 
-`Add-AppDevPackage.ps1` does not download the app from the internet.
-
-It installs the app from the package files that are already inside the extracted release zip. After installation, Windows registers the app and stores it in its protected app package location, usually under:
+If you want a desktop shortcut, run:
 
 ```text
-C:\Program Files\WindowsApps
+Create Desktop Shortcut.ps1
 ```
 
-You normally do not open the app from that folder. Start it from the Windows Start menu as:
-
-```text
-Codex Notification Listener
-```
+The shortcut will point to `CodexNotificationListener.exe` in the extracted folder.
 
 ## What It Does
 
@@ -87,7 +81,6 @@ AUMID: OpenAI.Codex_2p2nqsd0c76g0!App
 
 - Windows 11.
 - `Sounds\codex.wav` must exist.
-- Developer Mode may be required because this is currently an unsigned test package.
 
 ## Requirements For Developers
 
@@ -150,6 +143,16 @@ Add-AppDevPackage.ps1
 ```
 
 This is a development/test install. Windows may require Developer Mode. For a polished installer without Developer Mode warnings, the MSIX must be signed with a trusted code-signing certificate.
+
+## Build A Portable App Folder
+
+From PowerShell:
+
+```powershell
+dotnet publish .\CodexNotificationListener\CodexNotificationListener.csproj -c Release -p:Platform=x64 -p:WindowsPackageType=None -p:AppxPackage=false -p:WindowsAppSDKSelfContained=true -p:SelfContained=true -p:PublishSingleFile=false -o .\dist\CodexNotificationListener-portable
+```
+
+This creates a normal app folder with `CodexNotificationListener.exe` inside it.
 
 ## Run
 
