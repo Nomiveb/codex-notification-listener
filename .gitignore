@@ -4,6 +4,5 @@ obj/
 *.suo
 .vs/
 *_Test.zip
-AGENTS.md
 dist/
 *.zip

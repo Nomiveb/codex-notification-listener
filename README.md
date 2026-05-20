@@ -18,7 +18,7 @@ It writes a plain log here:
 C:\AHK\codex_notification_listener.log
 ```
 
-For normal use, launch it from Start as `Codex Notification Listener`, because Windows registers it as a packaged app.
+For normal use, download the release archive, extract it, and run `CodexNotificationListener.exe`.
 
 ## Download The App
 
@@ -36,6 +36,8 @@ You can move the extracted folder anywhere, for example Desktop, Downloads, or `
 
 The source code zip is only for developers who want to inspect or change the code.
 
+The release archive is the user build. It is not the same as GitHub's automatic **Source code (zip)** download.
+
 ## Change The Sound
 
 In the extracted app folder, replace this file with your own WAV file:
@@ -45,16 +47,6 @@ Sounds\codex.wav
 ```
 
 The file must stay named `codex.wav`.
-
-## Desktop Shortcut
-
-If you want a desktop shortcut, run:
-
-```text
-Create Desktop Shortcut.ps1
-```
-
-The shortcut will point to `CodexNotificationListener.exe` in the extracted folder.
 
 ## What It Does
 
@@ -118,48 +110,25 @@ Use `x64`.
 
 The project includes `<EnableMsixTooling>true</EnableMsixTooling>` because Windows App SDK packaging can fail without it on CLI builds.
 
-## Build A Shareable Test Package
-
-From PowerShell:
-
-```powershell
-dotnet publish .\CodexNotificationListener\CodexNotificationListener.csproj -c Release -p:Platform=x64 -p:AppxPackage=true -p:GenerateAppxPackageOnBuild=true -p:AppxPackageSigningEnabled=false
-```
-
-This creates a test MSIX package folder here:
-
-```text
-CodexNotificationListener\bin\x64\Release\net8.0-windows10.0.19041.0\win-x64\AppPackages\CodexNotificationListener_1.0.0.0_x64_Test
-```
-
-To share with another person, zip that whole folder and send it.
-
-For GitHub, attach that zip to a GitHub Release. Do not commit generated package zips into the repository.
-
-Users should run:
-
-```text
-Add-AppDevPackage.ps1
-```
-
-This is a development/test install. Windows may require Developer Mode. For a polished installer without Developer Mode warnings, the MSIX must be signed with a trusted code-signing certificate.
-
-## Build A Portable App Folder
+## Build The Release Archive
 
 From PowerShell:
 
 ```powershell
 dotnet publish .\CodexNotificationListener\CodexNotificationListener.csproj -c Release -p:Platform=x64 -p:WindowsPackageType=None -p:AppxPackage=false -p:WindowsAppSDKSelfContained=true -p:SelfContained=true -p:PublishSingleFile=false -o .\dist\CodexNotificationListener-portable
+Compress-Archive -Path .\dist\CodexNotificationListener-portable\* -DestinationPath .\CodexNotificationListener-v1.0.0-windows-x64-portable.zip -Force
 ```
 
-This creates a normal app folder with `CodexNotificationListener.exe` inside it.
+This creates a normal app folder with `CodexNotificationListener.exe` inside it, then zips that folder for GitHub Releases.
+
+For GitHub, attach `CodexNotificationListener-v1.0.0-windows-x64-portable.zip` to a GitHub Release. Do not commit generated package zips into the repository.
 
 ## Run
 
-Run the packaged app from Visual Studio with:
+Run the app from the portable publish folder:
 
 ```text
-Debug > Start Debugging
+dist\CodexNotificationListener-portable\CodexNotificationListener.exe
 ```
 
 The first run should show a Windows permission prompt.
